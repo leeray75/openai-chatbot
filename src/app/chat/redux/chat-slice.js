@@ -7,12 +7,13 @@ export const sendMessageToOpenAI = createAsyncThunk(
   async ({ message }, { dispatch }) => {
     try {
       // Call the API route to send the message to OpenAI
+      console.log("[chat][redux](sendMessageToOpenAI) message:",message);
       const response = await fetch('/api/open-ai/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: message.text }),
+        body: JSON.stringify({ "text": message.text }),
       });
 
       if (!response.ok) {
