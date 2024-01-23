@@ -1,6 +1,3 @@
-Certainly! Here's the README.md content in a single markdown code block for easy copying and pasting:
-
-
 # OpenAI Chatbot
 
 ## Overview
@@ -28,7 +25,15 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
    cd openai-chatbot
    ```
 
-3. Install dependencies:
+3. Use Node.js version specified in `.nvmrc`:
+
+   ```bash
+   nvm use
+   ```
+
+   If you don't have NVM installed, you can install it using [NVM installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+4. Install dependencies:
 
    ```bash
    npm install
@@ -84,26 +89,7 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
 
   Runs ESLint for linting the code.
 
-### Dependencies
-
-- **@emotion/react:** ^11.11.3
-- **@emotion/styled:** ^11.11.0
-- **@mui/material:** ^5.15.6
-- **@reduxjs/toolkit:** ^2.0.1
-- **next:** 14.1.0
-- **react:** ^18
-- **react-dom:** ^18
-- **react-redux:** ^9.1.0
-
-### Development Dependencies
-
-- **eslint:** ^8
-- **eslint-config-next:** 14.1.0
-- **sass:** ^1.70.0
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
-
-Feel free to copy and paste this code block into your README.md file. Adjust any details based on your specific project requirements.
