@@ -91,5 +91,5 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.md).
 
