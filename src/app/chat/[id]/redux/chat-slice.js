@@ -23,7 +23,7 @@ export const sendMessageToOpenAI = createAsyncThunk(
             const data = await response.json();
 
             // Dispatch action with API response
-            dispatch(addMessage({ user: "AI", text: data.text, timestamp: new Date() }));
+            dispatch(addMessage({ role: "openai", content: data.text, timestamp: new Date() }));
         } catch (error) {
             console.error('Error sending message to OpenAI:', error.message);
             // Dispatch an error action if needed
@@ -32,15 +32,16 @@ export const sendMessageToOpenAI = createAsyncThunk(
 );
 
 
-const createChatMessage = ({ user, text, timestamp }) => {
+const createChatMessage = ({ role, content, timestamp }) => {
     return {
-        user,
-        text,
+        role,
+        content,
         timestamp
     }
 }
 
 const initialState = {
+    conversationId: "",
     messages: [],
 };
 

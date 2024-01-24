@@ -10,8 +10,8 @@ const MessageList = () => {
       {messages.map((message, index) => (
         
         <div key={index} data-timestamp={message.timestamp}>
-            <div className="user">{message.user}</div>
-            <div className="text">{message.text}</div>
+            <div className="role">{message.role}</div>
+            <div className="text">{message.content}</div>
         </div>
       ))}
     </div>

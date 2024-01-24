@@ -39,6 +39,23 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
    npm install
    ```
 
+5. **MongoDB Docker Setup:**
+
+   Follow the steps below to set up MongoDB and Mongo Express containers using Docker:
+
+   ```bash
+   # Create a Docker network:
+   docker network create mongodb-network
+
+   # Run MongoDB container with authentication:
+   docker run --name mongodb --network mongodb-network -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d mongo
+
+   # Run Mongo Express container with authentication:
+   docker run --name mongo-express --network mongodb-network -e ME_CONFIG_MONGODB_SERVER=mongodb -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password -e ME_CONFIG_BASICAUTH_USERNAME=admin -e ME_CONFIG_BASICAUTH_PASSWORD=password -p 8081:8081 -d mongo-express
+   ```
+
+   Replace `admin` and `password` with your desired MongoDB root username and password.
+
 ### Scripts
 
 - **Development:**

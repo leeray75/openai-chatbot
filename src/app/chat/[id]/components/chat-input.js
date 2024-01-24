@@ -9,8 +9,8 @@ const ChatInput = () => {
 
   const handleSendMessage = async () => {
     const payload = {
-        'user': 'User',
-        'text': newMessage,
+        'role': 'user',
+        'content': newMessage,
         'timestamp':  new Date()
     }
     dispatch(addMessage(payload));

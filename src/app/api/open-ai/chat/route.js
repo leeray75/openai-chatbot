@@ -1,3 +1,4 @@
+'use server';
 import OpenAI from 'openai';
 
 const OPENAI_CONFIG = {
