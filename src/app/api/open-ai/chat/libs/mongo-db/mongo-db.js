@@ -10,40 +10,12 @@ const {
     DB_PASSWORD,
     DB_NAME
 } = process.env;
-const caCertPath = path.join(process.cwd(), "mongo-db-certificate.pem");
-console.log("[api][utils][mongo-db] caCertPath:", caCertPath);
+
 //const caCert = fs.readFileSync(caCertPath);
-const uri = `mongdb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}`;
-//const dbName = "news";
-//const uri = `mongodb+srv://${username}:${password}@cluster0.iwbwwtl.mongodb.net/?retryWrites=true&w=majority`;
-/*const config = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    ssl: false,
-    tls: true,
-    tlsCAFile: `${process.cwd()}/mongo-db-certificate.pem`,
-}
-*/
+const uri = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}`;
+
 const config = { serverApi: ServerApiVersion.v1 }
 
-//let client = new MongoClient(uri,config);
-
-/*
-export const connectToDatabase = async () => {
-    try {
-
-        const client = new MongoClient(uri, config);
-        await client.connect();
-        const db = client.db("news");
-        console.log('[api][utils][mongo-db] Connected to MongoDB');
-        return { client, db };
-
-    } catch (error) {
-        console.error('[api][utils][mongo-db] Failed to connect to MongoDB:', error);
-        throw error;
-    }
-};
-*/
 async function createCollectionIfNotExists(collectionName) {
     const client = new MongoClient(uri, config);
     try {
@@ -70,7 +42,7 @@ async function createCollectionIfNotExists(collectionName) {
 }
 
 // Fetch documents by collection name with an optional filter
-export const getDocuments = async ({collectionName, filter = {} }) => {
+export const getDocuments = async ({ collectionName, filter = {} }) => {
     const client = new MongoClient(uri, config);
     try {
         console.log(
@@ -82,6 +54,7 @@ export const getDocuments = async ({collectionName, filter = {} }) => {
         const db = client.db(DB_NAME);
         const collection = db.collection(collectionName);
         const documents = await collection.find(filter).toArray();
+        console.log("[api][mongo-db][[getDocuments]] documents:\n",documents);
         return documents;
     } finally {
         await client.close();
@@ -89,13 +62,15 @@ export const getDocuments = async ({collectionName, filter = {} }) => {
 };
 
 // Fetch a document by collection name and id
-export const getDocumentById = async (collectionName, documentId) => {
+export const getDocumentById = async ({ collectionName, documentId }) => {
     const client = new MongoClient(uri, config);
     try {
         await client.connect();
         const db = client.db(DB_NAME);
         const collection = db.collection(collectionName);
-        const document = await collection.findOne({ id: documentId });
+        // Convert documentId to ObjectId
+        const objectId = new ObjectID(documentId);
+        const document = await collection.findOne({ _id: objectId });
         return document;
     } finally {
         await client.close();
