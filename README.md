@@ -48,7 +48,7 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
    docker network create mongodb-network
 
    # Run MongoDB container with authentication:
-   docker run --name mongodb --network mongodb-network -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d mongo
+   docker run --name mongodb --network mongodb-network -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -p 27017:27017 -d mongo
 
    # Run Mongo Express container with authentication:
    docker run --name mongo-express --network mongodb-network -e ME_CONFIG_MONGODB_SERVER=mongodb -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password -e ME_CONFIG_BASICAUTH_USERNAME=admin -e ME_CONFIG_BASICAUTH_PASSWORD=password -p 8081:8081 -d mongo-express

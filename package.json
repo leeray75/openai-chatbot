@@ -8,6 +8,7 @@
     "build:docker": "docker build -t openai-chatbot .",
     "start": "next start -p 3080",
     "start:docker": "docker run -p 3080:3080 openai-chatbot",
+    "test:mongodb": "node scripts/test-mongodb.js",
     "lint": "next lint"
   },
   "dependencies": {
