@@ -8,7 +8,11 @@ const MessageList = () => {
   return (
     <div>
       {messages.map((message, index) => (
-        <div key={index}>{message.text}</div>
+        
+        <div key={index} data-timestamp={message.timestamp}>
+            <div className="user">{message.user}</div>
+            <div className="text">{message.text}</div>
+        </div>
       ))}
     </div>
   );

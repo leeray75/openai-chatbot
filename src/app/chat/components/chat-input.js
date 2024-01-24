@@ -1,13 +1,19 @@
 // src/components/ChatInput.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { sendMessageToOpenAI } from '../redux/chat-slice';
+import { sendMessageToOpenAI, addMessage } from '../redux/chat-slice';
 
 const ChatInput = () => {
   const dispatch = useDispatch();
   const [newMessage, setNewMessage] = useState('');
 
   const handleSendMessage = async () => {
+    const payload = {
+        'user': 'User',
+        'text': newMessage,
+        'timestamp':  new Date()
+    }
+    dispatch(addMessage(payload));
     // Dispatch the thunk with the message
     await dispatch(sendMessageToOpenAI({ message: { text: newMessage } }));
     setNewMessage('');
