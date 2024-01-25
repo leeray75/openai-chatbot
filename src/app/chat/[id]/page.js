@@ -6,13 +6,13 @@ import { Provider } from 'react-redux';
 import store from './redux/chat-store';
 import Chat from './components/chat';
 
-const ChatPage = () => {
+const ChatPage = ({ params }) => {
     require("./chat-page.scss");
     return (
         <Provider store={store}>
             <main data-page="chat">
                 <h1>Chat Page</h1>
-                <Chat />
+                <Chat conversation-id={params.id}/>
             </main>
         </Provider>
     );

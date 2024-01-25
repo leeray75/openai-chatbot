@@ -39,6 +39,48 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
    npm install
    ```
 
+5. **MongoDB Docker Setup:**
+
+   Follow the steps below to set up MongoDB and Mongo Express containers using Docker:
+
+   ```bash
+   # Create a Docker network:
+   docker network create mongodb-network
+
+   # Run MongoDB container with authentication:
+   docker run --name mongodb --network mongodb-network -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -p 27017:27017 -d mongo
+
+   # Run Mongo Express container with authentication:
+   docker run --name mongo-express --network mongodb-network -e ME_CONFIG_MONGODB_SERVER=mongodb -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password -e ME_CONFIG_BASICAUTH_USERNAME=admin -e ME_CONFIG_BASICAUTH_PASSWORD=password -p 8081:8081 -d mongo-express
+   ```
+
+   Replace `admin` and `password` with your desired MongoDB root username and password.
+
+6. **Environment Variables**
+
+    Create a `.env.local` file in the root of the project with the following content:
+
+    ```env
+    # API Keys
+    OPENAI_API_KEY=<openai api key>
+    OPENAI_ORGANIZATION=<openai organization id>
+
+    # Database Configuration
+    DB_HOST=localhost
+    DB_PORT=27017
+    DB_USER=admin
+    DB_PASSWORD=password
+    DB_NAME=openai-chatbot
+
+    # Other Environment Variables
+    ENV=local
+    NODE_ENV=development
+    PORT=3030
+    ```
+
+    Make sure to replace `<openai api key>` and `<openai organization id>` with your actual OpenAI API key and organization ID.
+
+
 ### Scripts
 
 - **Development:**
