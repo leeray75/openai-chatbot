@@ -58,27 +58,27 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
 
 6. **Environment Variables**
 
-Create a `.env.local` file in the root of the project with the following content:
+    Create a `.env.local` file in the root of the project with the following content:
 
-```env
-# API Keys
-OPENAI_API_KEY=<openai api key>
-OPENAI_ORGANIZATION=<openai organization id>
+    ```env
+    # API Keys
+    OPENAI_API_KEY=<openai api key>
+    OPENAI_ORGANIZATION=<openai organization id>
 
-# Database Configuration
-DB_HOST=localhost
-DB_PORT=27017
-DB_USER=admin
-DB_PASSWORD=password
-DB_NAME=openai-chatbot
+    # Database Configuration
+    DB_HOST=localhost
+    DB_PORT=27017
+    DB_USER=admin
+    DB_PASSWORD=password
+    DB_NAME=openai-chatbot
 
-# Other Environment Variables
-ENV=local
-NODE_ENV=development
-PORT=3030
-```
+    # Other Environment Variables
+    ENV=local
+    NODE_ENV=development
+    PORT=3030
+    ```
 
-Make sure to replace `<openai api key>` and `<openai organization id>` with your actual OpenAI API key and organization ID.
+    Make sure to replace `<openai api key>` and `<openai organization id>` with your actual OpenAI API key and organization ID.
 
 
 ### Scripts
