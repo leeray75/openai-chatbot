@@ -99,8 +99,6 @@ const chatSlice = createSlice({
             // Handle pending state if needed
         });
         builder.addCase(fetchConversation.fulfilled, (state, { payload }) => {
-            console.log("[chat][redux][extraReducers](fetchConversation.fulfilled) state:", { ...state });
-            console.log("[chat][redux][extraReducers](fetchConversation.fulfilled) payload:", payload);
             // Handle fulfilled state by updating the state with the data from the async thunk
             Object.assign(state, payload);
             console.log("[chat][redux][extraReducers](fetchConversation.fulfilled) new state:", { ...state });
@@ -113,8 +111,9 @@ const chatSlice = createSlice({
         });
         builder.addCase(sendMessageToOpenAI.fulfilled, (state, { payload }) => {
             // Handle fulfilled state if needed
-            console.log("[chat][redux][extraReducers](sendMessageToOpenAI.fulfilled) payload:", payload);
+            
             Object.assign(state, payload);
+            console.log("[chat][redux][extraReducers](sendMessageToOpenAI.fulfilled)) new state:", { ...state });
         });
     },
 });

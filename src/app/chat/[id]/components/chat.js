@@ -23,7 +23,7 @@ const Chat = ({ "conversation-id": conversationId }) => {
 
 
   return (
-    <div>
+    <div data-component="Chat">
       <MessageList />
       <ChatInput />
     </div>

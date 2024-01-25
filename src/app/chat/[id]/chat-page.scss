@@ -1,3 +1,50 @@
+// src/components/MessageList.scss
+
+$gap: 16px;
+
 [data-page="chat"] {
-    color: #ccc;
+    color: #000;
+    width: 100%;
+    [data-component="MessageList"] {
+        width: 100%;
+        .message-row {
+            display: flex;
+            gap: $gap;
+            border-radius: 12px; // Adjusted for a more rounded bubble-like appearance
+            overflow: hidden; // Ensure content within the bubble stays hidden if it exceeds the container
+            margin: 8px;
+            max-width: 45%;
+
+            &[data-role="user"] {
+                background-color: #64b5f6; // Background color for user
+                color: #000; // Font color for user
+                margin-left: auto; // Align user messages to the right
+                > .role {
+                    order: 2;
+                    
+                }
+                > .content {
+                    order: 1;
+                    text-align: right;
+                    
+                }
+            }
+
+            &[data-role="assistant"] {
+                background-color: #ff9800; // Background color for assistant
+                color: #000000; // Font color for assistant
+                margin-right: auto; // Align assistant messages to the left
+            }
+
+            >.role {
+                flex: 0;
+                font-weight: bold;
+            }
+
+            >.content {
+                flex: 1 1;
+
+            }
+        }
+    }
 }

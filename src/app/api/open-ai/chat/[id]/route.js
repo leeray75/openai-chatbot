@@ -23,7 +23,7 @@ export async function HEAD(request) { }
 
 export async function POST(req, { params }) {
     const { id } = params;
-    console.log("[api][open-ai][chat][id][route](POST) id:", id);
+    //console.log("[api][open-ai][chat][id][route](POST) id:", id);
     const filter = {
         "conversation-id": id
     }
@@ -31,11 +31,9 @@ export async function POST(req, { params }) {
 
     const [json, document] = await Promise.all(promises)
 
-    console.log("[api][open-ai][chat][id][route](POST)(promise) json:\n", json);
-    console.log("[api][open-ai][chat][id][route](POST)(promise) document:\n", document);
     const { content } = json;
-    const { messages = [] } = document;
-    console.log("[api][open-ai][chat][id][route](POST)(promise) messages:\n", messages);
+    const { messages = [] } = document ?? {};
+  
     const userMessage = {
         timestamp: new Date().getTime(),
         role: 'user',
@@ -49,14 +47,14 @@ export async function POST(req, { params }) {
             content
         }
     });
-    console.log("[api][open-ai][chat][id][route](POST)(promise) formatMessages:\n", formatMessages);
+
     // Call OpenAI API
     const openai = new OpenAI(OPENAI_CONFIG);
     const chatCompletion = await openai.chat.completions.create({
         messages: formatMessages,
         model: 'gpt-3.5-turbo',
     });
-    console.log("[api][open-ai][chat][id][route](POST)(promise) chatCompletion:\n", chatCompletion);
+    //console.log("[api][open-ai][chat][id][route](POST)(promise) chatCompletion:\n", chatCompletion);
     const { message: aiMessage = {} } = chatCompletion.choices[0];
     const newAiMessage = {
         timestamp: new Date().getTime(),
@@ -93,23 +91,7 @@ export async function POST(req, { params }) {
         await updateDocument(payload);
     }
 
-    const responseJson = {
-        "conversation-id": id,
-        "user-id": "",
-        "messages": newMessages
-    }
-    console.log("[api][open-ai][chat][id][route](POST)(promise) responseJson:\n", responseJson);
-    /*
-    // Call OpenAI API
-    const openai = new OpenAI(OPENAI_CONFIG);
-    const message = { role: 'user', content: json.text };
-    console.log("[api][open-ai][chat][route](POST) message:\n", message);
-    const chatCompletion = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: json.text }],
-        model: 'gpt-3.5-turbo',
-    });
-    const responseJson = { text: chatCompletion.choices[0]?.message?.content || 'No Response' }
-    */
+    //console.log("[api][open-ai][chat][id][route](POST)(promise) responseJson:\n", responseJson);
 
     const responseData = await getOneDocument({ collectionName: COLLECTION_NAME, filter });
     return Response.json(responseData);
