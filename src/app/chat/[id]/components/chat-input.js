@@ -8,14 +8,13 @@ const ChatInput = () => {
   const [newMessage, setNewMessage] = useState('');
 
   const handleSendMessage = async () => {
-    const payload = {
-        'role': 'user',
-        'content': newMessage,
-        'timestamp':  new Date()
-    }
-    dispatch(addMessage(payload));
+
+   //dispatch(addMessage(payload));
     // Dispatch the thunk with the message
-    await dispatch(sendMessageToOpenAI({ message: { text: newMessage } }));
+    const payload = {
+      message: newMessage
+    }
+    await dispatch(sendMessageToOpenAI(payload));
     setNewMessage('');
   };
 

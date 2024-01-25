@@ -54,8 +54,28 @@ export const getDocuments = async ({ collectionName, filter = {} }) => {
         const db = client.db(DB_NAME);
         const collection = db.collection(collectionName);
         const documents = await collection.find(filter).toArray();
-        console.log("[api][mongo-db][[getDocuments]] documents:\n",documents);
+        console.log("[api][mongo-db][[getDocuments]] documents:\n", documents);
         return documents;
+    } finally {
+        await client.close();
+    }
+};
+
+// Fetch document by collection name with an optional filter
+export const getOneDocument = async ({ collectionName, filter = {} }) => {
+    const client = new MongoClient(uri, config);
+    try {
+        console.log(
+            "[api][mongo-db][[getDocuments]] collectionName:",
+            collectionName
+        );
+        await client.connect();
+        console.log("[api][mongo-db][[getDocuments]] client connected");
+        const db = client.db(DB_NAME);
+        const collection = db.collection(collectionName);
+        const document = await collection.findOne(filter);
+        console.log("[api][mongo-db][[getDocuments]] document:\n", document);
+        return document;
     } finally {
         await client.close();
     }
@@ -76,13 +96,35 @@ export const getDocumentById = async ({ collectionName, documentId }) => {
         await client.close();
     }
 };
-
-// Update a document by collection name and id with updated data
-export const updateDocument = async (
+/**
+ * Updates a document in a MongoDB collection by its ID with new data.
+ *
+ * @async
+ * @function
+ * @param {Object} options - The options object.
+ * @param {string} options._id - The unique identifier of the document to be updated.
+ * @param {string} options.collectionName - The name of the MongoDB collection.
+ * @param {Object} options.updatedData - The updated data to be applied to the document.
+ * @returns {Promise<Object>} - A promise that resolves with the update result from the MongoDB operation.
+ *
+ * @throws {Error} - Throws an error if there is an issue connecting to the database or performing the update.
+ *
+ * @example
+ * const updateResult = await updateDocument({
+ *   _id: '603486e3a8b107001c249c75', // Example document ID
+ *   collectionName: 'users',
+ *   updatedData: {
+ *     username: 'newUsername',
+ *     email: 'newemail@example.com',
+ *   },
+ * });
+ * console.log(updateResult); // MongoDB update result
+ */
+export const updateDocument = async ({
+    _id,
     collectionName,
-    documentId,
     updatedData
-) => {
+}) => {
     console.log("[mongodb][updateDocument] data:\n", updatedData);
     const client = new MongoClient(uri, config);
     try {
@@ -91,12 +133,11 @@ export const updateDocument = async (
         const db = client.db(DB_NAME);
         const collection = db.collection(collectionName);
         const response = await collection.updateOne(
-            { id: documentId },
+            { _id },
             { $set: updatedData }
         );
         return response;
 
-        return {};
     } finally {
         await client.close();
     }
@@ -135,12 +176,32 @@ const checkIfDocumentExists = async (collection, uniqueProperty, value) => {
     return count > 0;
 };
 
-// Save a new document
-export const saveDocument = async (
+/**
+ * Saves a document to a MongoDB collection.
+ *
+ * @param {Object} options - The options object.
+ * @param {string} options.collectionName - The name of the MongoDB collection.
+ * @param {Object} options.document - The document to be saved.
+ * @param {string} options.uniqueProperty - The unique property to check for existence.
+ * @returns {Promise<string>} - A promise that resolves with the inserted document's ID.
+ * @throws {Error} - Throws an error if a document with the specified unique property already exists.
+ *
+ * @example
+ * const result = await saveDocument({
+ *   collectionName: 'users',
+ *   document: {
+ *     name: 'John Doe',
+ *     email: 'john.doe@example.com',
+ *   },
+ *   uniqueProperty: 'email',
+ * });
+ * console.log(result); // Inserted document ID
+ */
+export const saveDocument = async ({
     collectionName,
     document,
     uniqueProperty
-) => {
+}) => {
     const client = new MongoClient(uri, config);
     try {
         await client.connect();
@@ -170,6 +231,7 @@ export const saveDocument = async (
         await client.close();
     }
 };
+
 
 // Save an array of documents only if a specified property is unique
 export const saveDocuments = async (
