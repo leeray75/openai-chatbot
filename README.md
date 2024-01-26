@@ -2,7 +2,16 @@
 
 ## Overview
 
-This repository contains the source code for the OpenAI Chatbot project. It is a Next.js application using Emotion for styling, Material-UI for UI components, and Redux Toolkit for state management.
+This repository contains the source code for the OpenAI Chatbot project. It is a Next.js application using SASS/SCSS for styling, Material-UI for UI components, and Redux Toolkit for state management.
+
+## Technologies Used
+
+- Next.js
+- SASS/SCSS (for styling)
+- Material-UI (for UI components)
+- Redux Toolkit (for state management)
+- Docker
+- MongoDB
 
 ## Getting Started
 
