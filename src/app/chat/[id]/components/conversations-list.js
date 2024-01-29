@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 
 const ConversationsList = () => {
-
   const [conversations, setConversations] = useState([]);
   console.log("[conversations-list]", conversations);
   useEffect(() => {
@@ -32,13 +31,15 @@ const ConversationsList = () => {
       {conversations.map((conversation, index) => {
         const href = `/chat/${conversation["conversation-id"]}`;
         return (
-          <Link href={href}
-            key={index}
-            className="message-row"
-            data-conversation-id={conversation["conversation-id"]}
-          >
-            {conversation["conversation-id"]}
-          </Link>
+          <div>
+            <Link
+              href={href}
+              key={index}
+              data-conversation-id={conversation["conversation-id"]}
+            >
+              {conversation["conversation-id"]}
+            </Link>
+          </div>
         );
       })}
     </aside>
