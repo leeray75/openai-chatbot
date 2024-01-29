@@ -7,7 +7,7 @@ export const fetchConversations = createAsyncThunk(
         try {
             // Call the API route to send the message to OpenAI
 
-            const url = `/api/open-ai/chat`;
+            const url = `/api/conversations/1`;
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -20,7 +20,8 @@ export const fetchConversations = createAsyncThunk(
             }
 
             const data = await response.json();
-            return { ...data, conversationId };
+            console.log("[chat][redux][conversation-slice](fetchConversations) response data:\n",data);
+            return data
 
         } catch (error) {
             console.error('Error sending message to OpenAI:', error.message);

@@ -6,7 +6,20 @@ $lineHeight: 1.2em;
 [data-page="chat"] {
     color: #000;
     width: 100%;
+    .container {
+        display: flex;
+        [data-component="ConversationsList"] {
+            flex: 0 0 25%;
+            color: #fff;
+        }
+        [data-component="Chat"] {
+            flex: 1 1 75%;
+        }
+
+    }
+
     [data-component="MessageList"] {
+        flex: 1 1 75%;
         width: 100%;
         .message-row {
             display: flex;
