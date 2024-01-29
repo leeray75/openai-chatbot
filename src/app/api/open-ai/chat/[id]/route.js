@@ -1,6 +1,6 @@
 'use server'
 import OpenAI from 'openai';
-import { updateDocument, getOneDocument, saveDocument } from '../libs/mongo-db/mongo-db';
+import { updateDocument, getOneDocument, saveDocument } from '../../../libs/mongo-db/mongo-db';
 
 const OPENAI_CONFIG = {
     //organization: process.env.OPENAI_ORGANIZATION,
@@ -25,6 +25,7 @@ export async function POST(req, { params }) {
     const { id } = params;
     //console.log("[api][open-ai][chat][id][route](POST) id:", id);
     const filter = {
+        "user-id": "1",
         "conversation-id": id
     }
     const promises = [req.json(), getOneDocument({ collectionName: COLLECTION_NAME, filter })];
@@ -71,7 +72,7 @@ export async function POST(req, { params }) {
             collectionName: COLLECTION_NAME,
             document: {
                 "conversation-id": id,
-                "user-id": "",
+                "user-id": "1",
                 "messages": newMessages
             },
             uniqueProperty: 'conversation-id'
