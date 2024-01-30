@@ -40,7 +40,7 @@ const ConversationsList = () => {
         return (
           <div className={styles.conversationItem} key={index}>
             <Link href={href} data-conversation-id={conversation["conversation-id"]}>
-              <a>{conversation["conversation-id"]}</a>
+              {conversation["conversation-id"]}
             </Link>
           </div>
         );
