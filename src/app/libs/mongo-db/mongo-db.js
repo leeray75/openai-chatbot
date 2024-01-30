@@ -75,7 +75,7 @@ export const getOneDocument = async ({ collectionName, filter = {} }) => {
   const client = new MongoClient(uri, config);
   try {
     console.log(
-      "[api][mongo-db][[getDocuments]] collectionName:",
+      "[api][mongo-db][[getOneDocument] collectionName:",
       collectionName
     );
     await client.connect();
@@ -83,7 +83,7 @@ export const getOneDocument = async ({ collectionName, filter = {} }) => {
     const db = client.db(DB_NAME);
     const collection = db.collection(collectionName);
     const document = await collection.findOne(filter);
-    console.log("[api][mongo-db][[getDocuments]] document:\n", document);
+    console.log("[api][mongo-db][[getOneDocument] document:\n", document);
     return document;
   } finally {
     await client.close();

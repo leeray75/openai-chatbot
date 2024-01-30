@@ -1,6 +1,6 @@
 'use server'
 import OpenAI from 'openai';
-import { getDocuments } from '../../libs/mongo-db/mongo-db';
+import { getDocuments } from '../../../libs/mongo-db/mongo-db';
 
 const COLLECTION_NAME = "conversations";
 // https://nextjs.org/docs/app/building-your-application/routing/route-handlers

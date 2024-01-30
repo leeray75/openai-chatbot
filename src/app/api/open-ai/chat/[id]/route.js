@@ -1,6 +1,6 @@
 'use server'
 import OpenAI from 'openai';
-import { updateDocument, getOneDocument, saveDocument } from '../../../libs/mongo-db/mongo-db';
+import { updateDocument, getOneDocument, saveDocument } from '../../../../libs/mongo-db/mongo-db';
 
 const OPENAI_CONFIG = {
     //organization: process.env.OPENAI_ORGANIZATION,
