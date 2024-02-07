@@ -11,7 +11,7 @@ import { getSessionData } from '@/app/utils/get-session-data';
 const ChatPage = ({ params }) => {
     require("./chat-page.scss");
     const [sessionData, setSessionData] = useState(null)
-    
+
     useEffect(() => {
         (async () => {
             try {
