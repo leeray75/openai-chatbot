@@ -3,7 +3,7 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers'
 function getSessionData(request) {
-    console.log("[get-session-data] cookies:\n", cookies())
+    //console.log("[get-session-data] cookies:\n", cookies())
     const token = cookies().get(process.env.JWT_COOKIE_NAME)?.value
     console.log("get-session-data] token:", token);
     if (token) {
