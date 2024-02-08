@@ -38,8 +38,8 @@ const ConversationsList = () => {
         const href = `/chat/${conversation["conversation-id"]}`;
 
         return (
-          <div className={styles.conversationItem} key={index}>
-            <Link href={href} data-conversation-id={conversation["conversation-id"]}>
+          <div className={styles.conversationItem} key={index} data-conversation-id={conversation["conversation-id"]}>
+            <Link href={href}>
               {conversation["conversation-id"]}
             </Link>
           </div>

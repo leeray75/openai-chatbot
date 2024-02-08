@@ -98,7 +98,7 @@ export const getDocumentById = async ({ collectionName, documentId }) => {
     const db = client.db(DB_NAME);
     const collection = db.collection(collectionName);
     // Convert documentId to ObjectId
-    const objectId = new ObjectID(documentId);
+    const objectId = new ObjectId(documentId);
     const document = await collection.findOne({ _id: objectId });
     return document;
   } finally {

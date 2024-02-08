@@ -16,7 +16,7 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: ['/((?!api|user|_next/static|_next/image|.*\\.png$).*)'],
+    matcher: ['/((?!api|user|_next/static|_next/image|favicon.ico|.*\\.png$).*)'],
 }
 
 export const sessionOptions = {

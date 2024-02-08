@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './redux/chat-store';
 import Chat from './components/chat';
 import ConversationsList from './components/conversations-list';
-import { getSessionData } from '@/app/utils/get-session-data';
+import getSessionData from '@/app/utils/get-session-data';
 
 const ChatPage = ({ params }) => {
     require("./chat-page.scss");
