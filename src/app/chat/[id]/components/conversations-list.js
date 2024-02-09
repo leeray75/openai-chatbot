@@ -8,7 +8,7 @@ const ConversationsList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `/api/conversations/1`;
+        const url = `/api/conversations`;
         const response = await fetch(url, {
           method: "GET",
           headers: {

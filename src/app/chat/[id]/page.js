@@ -19,7 +19,7 @@ const ChatPage = ({ params }) => {
                 console.log("[chat-page] sessionData:", sessionData);
                 setSessionData(sessionData);
             } catch (error) {
-                console.error(error);
+                console.error("[chat-page] error:\n",error);
             }
         })();
     }, [])

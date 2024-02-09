@@ -85,6 +85,9 @@ This repository contains the source code for the OpenAI Chatbot project. It is a
     ENV=local
     NODE_ENV=development
     PORT=3030
+
+    JWT_COOKIE_NAME=jwt_token
+    JWT_SECRET=local-openai-chatbot-jwt-secret
     ```
 
     Make sure to replace `<openai api key>` and `<openai organization id>` with your actual OpenAI API key and organization ID.
