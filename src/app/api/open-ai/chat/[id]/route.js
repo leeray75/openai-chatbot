@@ -1,7 +1,7 @@
 'use server'
 import OpenAI from 'openai';
-import { updateDocument, getOneDocument, saveDocument } from '../../../libs/mongo-db/mongo-db';
-
+import { updateDocument, getOneDocument, saveDocument } from '../../../../libs/mongo-db/mongo-db';
+import getSessionData from '@/app/utils/get-session-data';
 const OPENAI_CONFIG = {
     //organization: process.env.OPENAI_ORGANIZATION,
     apiKey: process.env.OPENAI_API_KEY,
@@ -12,7 +12,11 @@ const COLLECTION_NAME = "conversations";
 export async function GET(request, { params }) {
     const { id } = params;
     console.log("[api][open-ai][chat][id][route](GET) id:", id);
+    const userData = await getSessionData(request);
+    console.log("[api][open-ai][chat][route](GET) userData:\n", userData);
+    const { userId } = userData;
     const filter = {
+        "user-id": userId,
         "conversation-id": id
     }
     const document = await getOneDocument({ collectionName: COLLECTION_NAME, filter });
@@ -21,14 +25,17 @@ export async function GET(request, { params }) {
 
 export async function HEAD(request) { }
 
-export async function POST(req, { params }) {
+export async function POST(request, { params }) {
     const { id } = params;
+    const userData = await getSessionData(request);
+    console.log("[api][open-ai][chat][route](POST) userData:\n", userData);
+    const { userId } = userData;
     //console.log("[api][open-ai][chat][id][route](POST) id:", id);
     const filter = {
-        "user-id": "1",
+        "user-id": userId,
         "conversation-id": id
     }
-    const promises = [req.json(), getOneDocument({ collectionName: COLLECTION_NAME, filter })];
+    const promises = [request.json(), getOneDocument({ collectionName: COLLECTION_NAME, filter })];
 
     const [json, document] = await Promise.all(promises)
 
@@ -72,7 +79,7 @@ export async function POST(req, { params }) {
             collectionName: COLLECTION_NAME,
             document: {
                 "conversation-id": id,
-                "user-id": "1",
+                "user-id": userId,
                 "messages": newMessages
             },
             uniqueProperty: 'conversation-id'

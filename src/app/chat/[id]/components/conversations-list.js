@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
+import styles from "./scss/conversations-list.scss";
 
 const ConversationsList = () => {
   const [conversations, setConversations] = useState([]);
-  console.log("[conversations-list]", conversations);
+
   useEffect(() => {
-    (async () => {
-      if (conversations.length === 0) {
-        const url = `/api/conversations/1`;
+    const fetchData = async () => {
+      try {
+        const url = `/api/conversations`;
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -17,26 +17,29 @@ const ConversationsList = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to send message to OpenAI");
+          throw new Error("Failed to fetch conversations from OpenAI");
         }
 
         const data = await response.json();
         setConversations(data);
+      } catch (error) {
+        console.error("[ConversationsList] Error:", error.message);
       }
-    })();
-  }, [conversations]);
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <aside className="conversations-list" data-component="ConversationsList">
+    <aside className={styles.conversationsList} data-component="ConversationsList">
+      <h2 className={styles.heading}>Your Conversations</h2>
+
       {conversations.map((conversation, index) => {
         const href = `/chat/${conversation["conversation-id"]}`;
+
         return (
-          <div>
-            <Link
-              href={href}
-              key={index}
-              data-conversation-id={conversation["conversation-id"]}
-            >
+          <div className={styles.conversationItem} key={index} data-conversation-id={conversation["conversation-id"]}>
+            <Link href={href}>
               {conversation["conversation-id"]}
             </Link>
           </div>

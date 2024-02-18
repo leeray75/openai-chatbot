@@ -105,3 +105,13 @@ a {
     color-scheme: dark;
   }
 }
+.header-app-bar {
+  a {
+    display: inline-block
+  }
+  .user-account-container {
+    svg {
+      fill: #fff;
+    }
+  }
+}
