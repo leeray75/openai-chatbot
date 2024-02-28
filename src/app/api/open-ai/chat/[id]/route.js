@@ -1,11 +1,17 @@
 'use server'
 import OpenAI from 'openai';
-import { updateDocument, getOneDocument, saveDocument } from '../../../../libs/mongo-db/mongo-db';
+
 import getSessionData from '@/app/utils/get-session-data';
+
+import { updateDocument, getOneDocument, saveDocument } from '@/app/libs/mongo-db/mongo-db';
+
+
 const OPENAI_CONFIG = {
     //organization: process.env.OPENAI_ORGANIZATION,
     apiKey: process.env.OPENAI_API_KEY,
 }
+//const MODEL = 'gpt-3.5-turbo';
+const MODEL = 'gpt-4';
 const COLLECTION_NAME = "conversations";
 // https://nextjs.org/docs/app/building-your-application/routing/route-handlers
 
@@ -60,7 +66,7 @@ export async function POST(request, { params }) {
     const openai = new OpenAI(OPENAI_CONFIG);
     const chatCompletion = await openai.chat.completions.create({
         messages: formatMessages,
-        model: 'gpt-3.5-turbo',
+        model: MODEL,
     });
     //console.log("[api][open-ai][chat][id][route](POST)(promise) chatCompletion:\n", chatCompletion);
     const { message: aiMessage = {} } = chatCompletion.choices[0];

@@ -23,6 +23,7 @@ $lineHeight: 1.2em;
         width: 100%;
         .message-row {
             display: flex;
+            flex-wrap: wrap;
             gap: $gap;
             border-radius: 12px; // Adjusted for a more rounded bubble-like appearance
             overflow: hidden; // Ensure content within the bubble stays hidden if it exceeds the container

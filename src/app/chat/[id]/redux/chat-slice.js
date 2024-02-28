@@ -100,7 +100,8 @@ const chatSlice = createSlice({
         });
         builder.addCase(fetchConversation.fulfilled, (state, { payload }) => {
             // Handle fulfilled state by updating the state with the data from the async thunk
-            Object.assign(state, payload);
+            console.log("[chat][redux][extraReducers](fetchConversation.fulfilled) payload", payload);
+            Object.assign(state, {conversationId: payload["conversation-id"], messages: []},  payload);
             console.log("[chat][redux][extraReducers](fetchConversation.fulfilled) new state:", { ...state });
         });
 
