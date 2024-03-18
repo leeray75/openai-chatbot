@@ -18,7 +18,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Link from 'next/link'
 
 
-const pages = ['Chat', 'Image'];
+const pages = ['Chat', 'Image Generation'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function HeaderAppBar({ "user-data": userData }) {
@@ -40,6 +40,8 @@ function HeaderAppBar({ "user-data": userData }) {
         case 'Chat':
           router.push("/chat");
           break;
+        case 'Image Generation':
+          router.push("/image-generation");
       }
       setAnchorElNav(null);
     }
