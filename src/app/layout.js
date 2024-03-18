@@ -13,7 +13,12 @@ export const metadata = {
  
 
 export default async function RootLayout({ children }) {
-  const sessionData = await getSessionData();
+  let sessionData = null;
+  try {
+    sessionData = await getSessionData();
+  } catch(error) {
+    sessionData = null;
+  }
   const userData = sessionData ? await getUserData({sessionData}) : null;
   return (
     <html lang="en">
