@@ -3,11 +3,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchImages = createAsyncThunk(
     'image-generation/fetchImages',
-    async ({ imageId }, { dispatch }) => {
+    async (payload, { dispatch }) => {
         try {
             // Call the API route to send the message to OpenAI
-            console.log("[image-generation][redux](fetchImage) ImageId:", imageId);
-            const url = `/api/open-ai/image-generation/${imageId}`;
+
+            const url = `/api/open-ai/image-generation/${payload.routeId}`;
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -21,7 +21,7 @@ export const fetchImages = createAsyncThunk(
 
             const data = await response.json();
             console.log("[chat][redux](fetchImage) data:\n", data);
-            return { ...data, imageId };
+            return { ...data, ...payload };
 
         } catch (error) {
             console.error('Error sending message to OpenAI:', error.message);
@@ -39,9 +39,9 @@ export const sendPromptToOpenAI = createAsyncThunk(
             // Call the API route to send the message to OpenAI
             console.log("[image-generation][redux](sendPromptToOpenAI) prompt:", prompt);
             const { image: imageState } = getState();
-            const { imageId } = imageState;
+            const { routeId } = imageState;
 
-            const url = `/api/open-ai/image-generation/${imageId}`;
+            const url = `/api/open-ai/image-generation/${routeId}`;
             const bodyPayload =  {
                 "prompt": prompt
             }
@@ -79,8 +79,9 @@ const createChatMessage = ({ role, content, timestamp }) => {
 
 const initialState = {
     _id: "",
+    routeId: null,
     userId: "",
-    responses: []
+    messages: []
 };
 
 const imageGenerationSlice = createSlice({
@@ -99,9 +100,9 @@ const imageGenerationSlice = createSlice({
         });
         builder.addCase(fetchImages.fulfilled, (state, { payload }) => {
             // Handle fulfilled state by updating the state with the data from the async thunk
-            console.log("[chat][redux][extraReducers](fetchImage.fulfilled) payload", payload);
-            Object.assign(state, {ImageId: payload["Image-id"], messages: []},  payload);
-            console.log("[chat][redux][extraReducers](fetchImage.fulfilled) new state:", { ...state });
+            console.log("[image-generation][redux][extraReducers](fetchImage.fulfilled) payload", payload);
+            Object.assign(state, {routeId: payload.routeId, messages: []},  payload);
+            console.log("[image-generation][redux][extraReducers](fetchImage.fulfilled) new state:", { ...state });
         });
 
         // Handle pending and fulfilled actions for the async thunk
@@ -111,10 +112,10 @@ const imageGenerationSlice = createSlice({
         });
         builder.addCase(sendPromptToOpenAI.fulfilled, (state, { payload }) => {
             // Handle fulfilled state if needed
-            
+            console.log("[image-generation][redux][extraReducers](sendPromptToOpenAI.fulfilled)) payload:", payload);
             //Object.assign(state, payload);
-            state.responses.push(payload);
-            console.log("[chat][redux][extraReducers](sendMessageToOpenAI.fulfilled)) new state:", { ...state });
+            state.messages = payload.messages ?? state.messages
+            console.log("[image-generation][redux][extraReducers](sendPromptToOpenAI.fulfilled))  new state:", { ...state });
         });
     },
 });

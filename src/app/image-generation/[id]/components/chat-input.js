@@ -14,7 +14,7 @@ const ChatInput = () => {
     //dispatch(addMessage(payload));
     // Dispatch the thunk with the message
     const payload = {
-      message: newMessage
+      prompt: newMessage
     }
     setNewMessage('');
     await dispatch(sendPromptToOpenAI(payload));

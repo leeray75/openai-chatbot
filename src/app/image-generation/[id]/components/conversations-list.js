@@ -35,12 +35,12 @@ const ConversationsList = () => {
       <h2 className={styles.heading}>Your Conversations</h2>
 
       {conversations.map((conversation, index) => {
-        const href = `/chat/${conversation["conversation-id"]}`;
+        const href = `/image-generation/${conversation["route-id"]}`;
 
         return (
           <div className={styles.conversationItem} key={index} data-conversation-id={conversation["conversation-id"]}>
             <Link href={href}>
-              {conversation["conversation-id"]}
+              {conversation["route-id"]}
             </Link>
           </div>
         );

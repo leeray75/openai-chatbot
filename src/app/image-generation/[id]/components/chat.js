@@ -6,7 +6,7 @@ import ChatInput from './chat-input';
 import { fetchImages } from '../redux/image-slice';
 
 
-const Chat = ({ "image-generation-id": imageGenerationId }) => {
+const Chat = ({ "route-id": routeId }) => {
 
   const dispatch = useDispatch();
   const imageState = useSelector(state => {
@@ -14,12 +14,12 @@ const Chat = ({ "image-generation-id": imageGenerationId }) => {
   })
   useEffect(() => {
 
-    if (imageState.imageId!== imageGenerationId ) {
-      const payload = { imageId: imageGenerationId  };
+    if (imageState.routeId !== routeId ) {
+      const payload = { routeId: routeId  };
       dispatch(fetchImages(payload));
     }
 
-  }, [imageGenerationId , imageState])
+  }, [routeId , imageState])
 
 
   return (

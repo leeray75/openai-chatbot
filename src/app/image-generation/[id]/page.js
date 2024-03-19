@@ -31,11 +31,11 @@ const ImageGenerationPage = ({ params }) => {
     }, [])
     return (
         <Provider store={store}>
-            <main data-page="chat">
+            <main data-page="image-generation">
                 <h1>Image Generation Page</h1>
                 <div className="container">
-                    <ConversationsList />
-                    <Chat key={params.id} image-generation-id={params.id} />
+                   <ConversationsList />
+                    <Chat key={params.id} route-id={params.id} />
                 </div>
             </main>
         </Provider>
