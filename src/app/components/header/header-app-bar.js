@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,14 +18,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Link from 'next/link'
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Chat', 'Image Generation'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function HeaderAppBar({ "user-data": userData }) {
-  console.log("[header-app-bar] userData:\n", userData);
+  //console.log("[header-app-bar] userData:\n", userData);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
+  const router = useRouter();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -32,12 +33,53 @@ function HeaderAppBar({ "user-data": userData }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseNavMenu = (page) => {
+
+    return event => {
+      switch (page) {
+        case 'Chat':
+          router.push("/chat");
+          break;
+        case 'Image Generation':
+          router.push("/image-generation");
+      }
+      setAnchorElNav(null);
+    }
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleCloseUserMenu = (setting = null) => {
+
+    return event => {
+      console.log("[components][header][header-app-bar](handleCloseUserMenu) event:", event);
+      console.log("[components][header][header-app-bar](handleCloseUserMenu) setting:", setting);
+      switch (setting) {
+        case 'Logout':
+          (async () => {
+            try {
+              const response = await fetch('/api/user/logout', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                }
+              });
+
+              if (response.ok) {
+                const { token } = await response.json();
+                console.log("[components][header][header-app-bar](handleCloseUserMenu) Logout successful");
+                router.push("/");
+                // Handle successful login (e.g., store token in localStorage)
+              } else {
+                // Handle login error
+                console.error('Logout failed');
+              }
+            } catch (error) {
+              console.error('Error during logout:', error);
+            }
+          })();
+          break;
+      }
+      setAnchorElUser(null);
+    }
   };
   useEffect(() => {
     console.log("[header-app-bar] userData:\n", userData);
@@ -99,19 +141,19 @@ function HeaderAppBar({ "user-data": userData }) {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={handleCloseNavMenu(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -142,7 +184,7 @@ function HeaderAppBar({ "user-data": userData }) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

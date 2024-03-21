@@ -4,13 +4,13 @@ import { redirect } from 'next/navigation'
 import React, { useEffect, useState } from 'react';
 // pages/_app.js
 import { Provider } from 'react-redux';
-import store from './redux/chat-store';
+import store from './redux/image-store';
 import Chat from './components/chat';
 import ConversationsList from './components/conversations-list';
 import getSessionData from '@/app/utils/get-session-data';
 
-const ChatPage = ({ params }) => {
-    require("./chat-page.scss");
+const ImageGenerationPage = ({ params }) => {
+    require("./image-generation.scss");
     const [sessionData, setSessionData] = useState(null)
     console.log("[chat-page] params.id:", params.id);
     useEffect(() => {
@@ -31,15 +31,15 @@ const ChatPage = ({ params }) => {
     }, [])
     return (
         <Provider store={store}>
-            <main data-page="chat">
-                <h1>Chat Page</h1>
+            <main data-page="image-generation">
+                <h1>Image Generation Page</h1>
                 <div className="container">
-                    <ConversationsList />
-                    <Chat key={params.id} conversation-id={params.id} />
+                   <ConversationsList />
+                    <Chat key={params.id} route-id={params.id} />
                 </div>
             </main>
         </Provider>
     );
 };
 
-export default ChatPage;
+export default ImageGenerationPage;

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
 import { Button, TextField, Typography, Container } from '@mui/material';
 import './registration.scss';
 
@@ -21,6 +22,8 @@ const Register = () => {
 
       if (response.ok) {
         // Handle successful registration (e.g., show success message)
+        console.log("[user][registration][page] Registration successful");
+        router.push("/");
       } else {
         // Handle registration error
         console.error('Registration failed');

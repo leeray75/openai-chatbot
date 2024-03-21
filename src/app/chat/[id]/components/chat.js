@@ -12,9 +12,11 @@ const Chat = ({ "conversation-id": conversationId }) => {
   const chatState = useSelector(state => {
     return state.chat;
   })
+  console.log("[chat][components][chat] chatState:", chatState);
   useEffect(() => {
-    console.log("[chat][components][chat](useEffect) chatState:", chatState);
-    if (chatState.conversationId !== conversationId) {
+    console.log('[chat][components][chat](useEffect) chatState:', chatState);
+    console.log('[chat][components][chat](useEffect) conversationId:', conversationId);
+    if (chatState.conversationId!== conversationId) {
       const payload = { conversationId };
       dispatch(fetchConversation(payload));
     }

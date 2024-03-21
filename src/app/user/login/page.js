@@ -1,12 +1,13 @@
 "use client"
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
 import { Button, TextField, Typography, Container } from '@mui/material';
 import "./login.scss";
 const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const router = useRouter();
   const handleLogin = async () => {
     try {
       const response = await fetch('/api/user/login', {
@@ -19,6 +20,8 @@ const Login = () => {
 
       if (response.ok) {
         const { token } = await response.json();
+        console.log("[user][login][page] Login successful");
+        router.push("/");
         // Handle successful login (e.g., store token in localStorage)
       } else {
         // Handle login error
