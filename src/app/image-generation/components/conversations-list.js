@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import styles from "./scss/conversations-list.scss";
+import styles from "@/app/image-generation/scss/conversations-list.scss";
 
 const ConversationsList = () => {
   const [conversations, setConversations] = useState([]);

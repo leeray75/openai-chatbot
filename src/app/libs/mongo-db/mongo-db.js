@@ -232,7 +232,7 @@ export const saveDocument = async ({
     }
     const newDocument =
       typeof document.id === "undefined"
-        ? { ...document, id: uuidv4() }
+        ? { ...document, id: uuidv4(), timestamp: new Date().getTime() }
         : document;
     const result = await collection.insertOne(newDocument);
     return result.insertedId;

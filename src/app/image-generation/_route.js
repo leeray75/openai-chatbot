@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid';
 import getSessionData from '@/app/utils/get-session-data';
-export async function GET(request) {
+export async function POST(request) {
     let redirectUrl = '/';
     try {
         const sessionData = await getSessionData()

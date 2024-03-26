@@ -13,8 +13,10 @@ const Images = (props) => {
   })
   return htmlImages;
 }
-const MessageList = () => {
-  const { messages = [] } = useSelector((state) => state.image);
+const MessageList = (props) => {
+  console.log("[image-generation][message-list] props:",props);
+  const { messages = [] } = props;
+
   console.log("[image-generation][message-list] messages:", messages)
 
   return (

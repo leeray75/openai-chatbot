@@ -39,7 +39,7 @@ export async function POST(request, { params }) {
     //console.log("[api][open-ai][chat][id][route](POST) id:", id);
     const filter = {
         "user-id": userId,
-        "conversation-id": id
+        "route-id": id
     }
     const promises = [request.json(), getOneDocument({ collectionName: COLLECTION_NAME, filter })];
 
@@ -47,12 +47,11 @@ export async function POST(request, { params }) {
 
     const { content } = json;
     const { messages = [] } = document ?? {};
-  
+
     const userMessage = {
         timestamp: new Date().getTime(),
         role: 'user',
-        content,
-        metadata: {}
+        content
     }
     const chatMessages = [...messages, userMessage];
     const formatMessages = chatMessages.map(({ role, content }) => {
@@ -71,10 +70,9 @@ export async function POST(request, { params }) {
     //console.log("[api][open-ai][chat][id][route](POST)(promise) chatCompletion:\n", chatCompletion);
     const { message: aiMessage = {} } = chatCompletion.choices[0];
     const newAiMessage = {
+        type: "text",
         timestamp: new Date().getTime(),
-        metadata: {
-            "openai-response-data": chatCompletion
-        },
+        response: chatCompletion,
         ...aiMessage
     }
     const newMessages = [...chatMessages, newAiMessage]
@@ -84,16 +82,16 @@ export async function POST(request, { params }) {
         const payload = {
             collectionName: COLLECTION_NAME,
             document: {
-                "conversation-id": id,
+                "route-id": id,
                 "user-id": userId,
-                "messages": newMessages
+                "conversations": newMessages
             },
-            uniqueProperty: 'conversation-id'
+            uniqueProperty: 'route-id'
         }
         await saveDocument(payload);
 
     }
-    else if(document != null) {
+    else if (document != null) {
         const payload = {
             _id: document._id,
             collectionName: COLLECTION_NAME,
